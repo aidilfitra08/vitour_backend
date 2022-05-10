@@ -32,7 +32,13 @@ app.get("/", (req, res) => {
 //routes
 require("./app/routes/turorial.routes")(app);
 require("./app/routes/city")(app);
-
+require("./app/routes/culinary")(app);
+require("./app/routes/culture")(app);
+require("./app/routes/image")(app);
+require("./app/routes/marketplace")(app);
+require("./app/routes/destination")(app);
+require("./app/routes/merchandise")(app);
+require("./app/routes/videovr")(app);
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
