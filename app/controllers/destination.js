@@ -6,7 +6,7 @@ const response = require("../../helper/macro")
 // Create and Save a new Destination
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.nama_budaya) {
+  if (!req.body.nama_destinasi) {
     res.status(400).send({
       message: "Nama Destination Kosong!"
     });
