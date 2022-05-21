@@ -5,11 +5,12 @@ const dotenv = require("dotenv");
 
 const app = express();
 dotenv.config();
-var corsOptions = {
-  origin: "https://vitour-backend.herokuapp.com"
-};
+// var corsOptions = {
+//   origin: "https://vitour-backend.herokuapp.com"
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
