@@ -40,6 +40,8 @@ require("./app/routes/marketplace")(app);
 require("./app/routes/destination")(app);
 require("./app/routes/merchandise")(app);
 require("./app/routes/videovr")(app);
+require("./app/routes/admin")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
