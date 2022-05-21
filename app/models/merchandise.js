@@ -37,7 +37,8 @@ module.exports = (sequelize, DataTypes) => {
     nama_merchandise: DataTypes.STRING,
     deskripsi_merchandise: DataTypes.TEXT,
     alamat_toko: DataTypes.STRING,
-    id_alamat_marketplace: DataTypes.INTEGER
+    id_alamat_marketplace: DataTypes.INTEGER,
+    koordinat_toko: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'merchandise',
