@@ -14,10 +14,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Admin.init({
-    user_id: DataTypes.INTEGER,
-    email: DataTypes.INTEGER,
-    password: DataTypes.STRING,
-    name: DataTypes.STRING
+    user_id : {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    name: DataTypes.STRING,
+    email : {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
+    password: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'admin',
