@@ -6,12 +6,12 @@ const response = require("../../helper/macro")
 // Create and Save a new Merchandise
 exports.create = (req, res) => {
   // Validate request
-//   if (!req.body.nama_budaya) {
-//     res.status(400).send({
-//       message: "Nama Merchandise Kosong!"
-//     });
-//     return;
-//   }
+  if (!req.body.city_id && !req.body.link_video && !req.body.deskripsi && !req.body.durasi) {
+    res.status(400).send({
+      message: "Request kosong!"
+    });
+    return;
+  }
 
   // Create a Tutorial
 //   const Merchandise = {

@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
     durasi: DataTypes.INTEGER
   }, {
     sequelize,
-    modelName: 'videoVR',
+    modelName: 'videovr',
   });
   return VideoVR;
 };
