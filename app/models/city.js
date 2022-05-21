@@ -30,22 +30,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     email_dinas_pariwisata_kota: {
       type: DataTypes.STRING(50)
-    },
-    culinary_id: {
-      type: DataTypes.ARRAY
-    },
-    culture_id: {
-      type: DataTypes.ARRAY
-    },
-    destination_id: {
-      type: DataTypes.ARRAY
-    },
-    merchandise_id_all: {
-      type: DataTypes.ARRAY
-    },
-    videovr_id: {
-      type: DataTypes.ARRAY
     }
+    
   }, {
     sequelize,
     modelName: 'city',
