@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     nama_kuliner: DataTypes.STRING,
-    deskripsi_kuliner: DataTypes.TEXT
+    deskripsi_kuliner: DataTypes.TEXT,
+    koordinat_kuliner: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'culinary',
