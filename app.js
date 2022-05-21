@@ -6,7 +6,7 @@ const dotenv = require("dotenv");
 const app = express();
 dotenv.config();
 var corsOptions = {
-  origin: "http://localhost:8080"
+  origin: "https://vitour-backend.herokuapp.com"
 };
 
 app.use(cors(corsOptions));
