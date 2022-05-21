@@ -7,11 +7,11 @@ module.exports = app => {
     router.post("/", image.create);
   
     // Retrieve all image
-    router.get("/", image.findAllCityImages);
-    router.get("/", image.findAllCulinaryImages);
-    router.get("/", image.findAllCultureImages);
-    router.get("/", image.findAllDestinationImages);
-    router.get("/", image.findAllMerchandiseImages);
+    router.get("/city", image.findAllCityImages);
+    router.get("/culinary", image.findAllCulinaryImages);
+    router.get("/culture", image.findAllCultureImages);
+    router.get("/destination", image.findAllDestinationImages);
+    router.get("/merchandise", image.findAllMerchandiseImages);
   
     // Retrieve all published Tutorials
     // router.get("/published", tutorials.findAllPublished);

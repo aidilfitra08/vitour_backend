@@ -14,46 +14,46 @@ module.exports = (sequelize, DataTypes) => {
 
       //city
       models.city.hasMany(Image, {
-        foreignKey: 'reference_id'
+        foreignKey: 'city_id'
       })
       Image.belongsTo(models.city, {
-        foreignKey: 'reference_id',
+        foreignKey: 'city_id',
         onDelete: 'CASCADE'
       })
       
       //destination
       models.destination.hasMany(Image, {
-        foreignKey: 'reference_id'
+        foreignKey: 'destination_id'
       })
       Image.belongsTo(models.destination, {
-        foreignKey: 'reference_id',
+        foreignKey: 'destination_id',
         onDelete: 'CASCADE'
       })
       
       //culinary
       models.culinary.hasMany(Image, {
-        foreignKey: 'reference_id'
+        foreignKey: 'culinary_id'
       })
       Image.belongsTo(models.culinary, {
-        foreignKey: 'reference_id',
+        foreignKey: 'culinary_id',
         onDelete: 'CASCADE'
       })
 
       //culture
       models.culture.hasMany(Image, {
-        foreignKey: 'reference_id'
+        foreignKey: 'culture_id'
       })
       Image.belongsTo(models.culture, {
-        foreignKey: 'reference_id',
+        foreignKey: 'culture_id',
         onDelete: 'CASCADE'
       })
 
       //merchandise
       models.merchandise.hasMany(Image, {
-        foreignKey: 'reference_id'
+        foreignKey: 'merchandise_id'
       })
       Image.belongsTo(models.merchandise, {
-        foreignKey: 'reference_id',
+        foreignKey: 'merchandise_id',
         onDelete: 'CASCADE'
       })
     }
@@ -66,7 +66,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    reference_id: DataTypes.INTEGER,
     nama_gambar: DataTypes.STRING,
     type_gambar: DataTypes.STRING,
     images_link: DataTypes.STRING

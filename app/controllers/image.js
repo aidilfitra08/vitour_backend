@@ -6,9 +6,9 @@ const response = require("../../helper/macro")
 // Create and Save a new Image
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.reference_id) {
+  if (!req.body.city_id) {
     res.status(400).send({
-      message: "reference_id Kosong!"
+      message: "city_id kosong!"
     });
     return;
   }
@@ -36,7 +36,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAllCityImages = (req, res) => {
-    if (!req.body.city_id && !req.body.type_gambar) {
+    if (!req.body.city_id) {
         res.status(400).send({
           message: "request Kosong!"
         });
@@ -44,8 +44,11 @@ exports.findAllCityImages = (req, res) => {
       }
   Image.findAll({
       where: {
-          reference_id : req.body.city_id,
-          type_gambar : req.body.type_gambar
+          city_id : req.body.city_id,
+          culinary_id : null,
+          culture_id : null,
+          merchandise_id : null,
+          destination_id : null
         }
   })
     .then(data => {
@@ -60,7 +63,7 @@ exports.findAllCityImages = (req, res) => {
 };
 
 exports.findAllCulinaryImages = (req, res) => {
-    if (!req.body.culinary_id && !req.body.type_gambar) {
+    if (!req.body.city_id && !req.body.culinary_id) {
         res.status(400).send({
           message: "request Kosong!"
         });
@@ -68,8 +71,11 @@ exports.findAllCulinaryImages = (req, res) => {
       }
   Image.findAll({
       where: {
-          reference_id : req.body.culinary_id,
-          type_gambar : req.body.type_gambar
+          city_id : req.body.city_id,
+          culinary_id : req.body.culinary_id,
+          culture_id : null,
+          merchandise_id : null,
+          destination_id : null
         }
   })
     .then(data => {
@@ -84,7 +90,7 @@ exports.findAllCulinaryImages = (req, res) => {
 };
 
 exports.findAllCultureImages = (req, res) => {
-  if (!req.body.culture_id && !req.body.type_gambar) {
+  if (!req.body.city_id && !req.body.culture_id) {
       res.status(400).send({
         message: "request Kosong!"
       });
@@ -92,8 +98,11 @@ exports.findAllCultureImages = (req, res) => {
     }
 Image.findAll({
     where: {
-        reference_id : req.body.culture_id,
-        type_gambar : req.body.type_gambar
+        city_id : req.body.city_id,
+        culture_id : req.body.culture_id,
+        culinary_id : null,
+        merchandise_id : null,
+        destination_id : null
       }
 })
   .then(data => {
@@ -108,7 +117,7 @@ Image.findAll({
 };
 
 exports.findAllDestinationImages = (req, res) => {
-  if (!req.body.destination_id && !req.body.type_gambar) {
+  if (!req.body.city_id && !req.body.destination_id) {
       res.status(400).send({
         message: "request Kosong!"
       });
@@ -116,8 +125,11 @@ exports.findAllDestinationImages = (req, res) => {
     }
 Image.findAll({
     where: {
-        reference_id : req.body.destination_id,
-        type_gambar : req.body.type_gambar
+        city_id : req.body.city_id,
+        culture_id : null,
+        culinary_id : null,
+        merchandise_id : null,
+        destination_id : req.body.destination_id,
       }
 })
   .then(data => {
@@ -132,7 +144,7 @@ Image.findAll({
 };
 
 exports.findAllMerchandiseImages = (req, res) => {
-  if (!req.body.merchandise_id && !req.body.type_gambar) {
+  if (!req.body.city_id && !req.body.merchandise_id) {
       res.status(400).send({
         message: "request Kosong!"
       });
@@ -140,8 +152,11 @@ exports.findAllMerchandiseImages = (req, res) => {
     }
 Image.findAll({
     where: {
-        reference_id : req.body.merchandise_id,
-        type_gambar : req.body.type_gambar
+        city_id : req.body.city_id,
+        culinary_id : null,
+        culture_id : null,
+        merchandise_id : req.body.merchandise_id,
+        destination_id : null
       }
 })
   .then(data => {
