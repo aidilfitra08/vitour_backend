@@ -13,12 +13,6 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
-//   const Culture = {
-//     title: req.body.title,
-//     description: req.body.description,
-//     published: req.body.published ? req.body.published : false
-//   };
 
   const culture = req.body;
   // Save Tutorial in the database

@@ -13,12 +13,6 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
-//   const Culinary = {
-//     title: req.body.title,
-//     description: req.body.description,
-//     published: req.body.published ? req.body.published : false
-//   };
 
   const culinary = req.body;
   // Save Tutorial in the database
