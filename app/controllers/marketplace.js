@@ -6,19 +6,6 @@ const response = require("../../helper/macro")
 // Create and Save a new Marketplace
 exports.create = (req, res) => {
   // Validate request
-//   if (!req.body.whatsapp) {
-//     res.status(400).send({
-//       message: "Nama Marketplace Kosong!"
-//     });
-//     return;
-//   }
-
-  // Create a Tutorial
-//   const Marketplace = {
-//     title: req.body.title,
-//     description: req.body.description,
-//     published: req.body.published ? req.body.published : false
-//   };
 
   const marketplace = req.body;
   // Save Tutorial in the database
@@ -117,33 +104,3 @@ exports.delete = (req, res) => {
     });
 };
 
-// // Delete all Tutorials from the database.
-// exports.deleteAll = (req, res) => {
-//   Tutorial.destroy({
-//     where: {},
-//     truncate: false
-//   })
-//     .then(nums => {
-//       res.send({ message: `${nums} Tutorials were deleted successfully!` });
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while removing all tutorials."
-//       });
-//     });
-// };
-
-// // find all published Tutorial
-// exports.findAllPublished = (req, res) => {
-//   Tutorial.findAll({ where: { published: true } })
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials."
-//       });
-//     });
-// };
