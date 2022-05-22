@@ -13,8 +13,6 @@ exports.create = (req, res) => {
     return;
   }
 
-
-
   const city = req.body;
   // Save Tutorial in the database
   City.create(city)
