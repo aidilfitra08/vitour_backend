@@ -1,7 +1,7 @@
 const db = require("../models");
 const Merchandise = db.merchandise;
 const Op = db.Sequelize.Op;
-const response = require("../../helper/macro")
+const response = require("../../helper/macro");
 
 // Create and Save a new Merchandise
 exports.create = (req, res) => {
@@ -36,7 +36,10 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  Merchandise.findAll()
+  if (req.query.filter) {
+    Merchandise.findAll({
+      where: {merchandise_type: req.query.filter}
+    })
     .then(data => {
         response.successResponse(res, data);
     })
@@ -46,6 +49,18 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving Merchandises."
       });
     });
+  } else {
+    Merchandise.findAll()
+    .then(data => {
+        response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving Merchandises."
+      });
+    });
+  }
 };
 
 // Find a single Tutorial with an id
