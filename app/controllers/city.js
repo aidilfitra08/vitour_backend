@@ -1,7 +1,15 @@
 const db = require("../models");
 const City = db.city;
 const Op = db.Sequelize.Op;
-const response = require("../../helper/macro")
+const response = require("../../helper/macro");
+const marketplace = require("../routes/marketplace");
+const Culinary = db.culinary;
+const Culture = db.culture;
+const Destination = db.destination;
+const Merchandise = db.merchandise;
+const Marketplace = db.marketplace;
+const Image = db.image;
+const Videovr = db.videovr;
 
 // Create and Save a new City
 exports.create = (req, res) => {
@@ -12,13 +20,6 @@ exports.create = (req, res) => {
     });
     return;
   }
-
-  // Create a Tutorial
-//   const city = {
-//     title: req.body.title,
-//     description: req.body.description,
-//     published: req.body.published ? req.body.published : false
-//   };
 
   const city = req.body;
   // Save Tutorial in the database
@@ -36,29 +37,133 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  City.findAll()
-    .then(data => {
-        response.successResponse(res, data);
+  if (req.query.filter) {
+    City.findAll({
+      where: {nama_kota: req.query.filter},
+      include: [{
+        model: Culinary,
+        attributes: ['culinary_id', 'nama_kuliner'],
+        require: false
+        },
+        {
+          model: Culture,
+          attributes: ['culture_id', 'nama_budaya'],
+          require: false
+        },
+        {
+          model: Destination,
+          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+          require: false
+        },
+        {
+          model: Merchandise,
+          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+          require: false
+        },
+        {
+          model: Videovr,
+          require: false
+        }
+      ]
     })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving tutorials."
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving tutorials."
+        });
       });
-    });
+  } else {
+    City.findAll({
+      
+      include: [{
+        model: Culinary,
+        attributes: ['culinary_id', 'nama_kuliner'],
+        require: false
+        },
+        {
+          model: Culture,
+          attributes: ['culture_id', 'nama_budaya'],
+          require: false
+        },
+        {
+          model: Destination,
+          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+          require: false
+        },
+        {
+          model: Merchandise,
+          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+          require: false
+        },
+        {
+          model: Videovr,
+          require: false
+        }
+      ]
+    })
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving tutorials."
+        });
+      });
+  }
+  
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
+  // if (!req.query.filter) {
+  //   return req.query.filter;
+  // }
 
-  City.findByPk(id)
+  await City.findAll(
+    {
+      where: {
+        city_id: id
+      },
+      include: [{
+        model: Culinary,
+        attributes: ['culinary_id', 'nama_kuliner'],
+        require: false
+        },
+        {
+          model: Culture,
+          attributes: ['culture_id', 'nama_budaya'],
+          require: false
+        },
+        {
+          model: Destination,
+          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+          require: false
+        },
+        {
+          model: Merchandise,
+          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+          require: false
+        },
+        {
+          model: Videovr,
+          require: false
+        }
+      ],
+      
+
+    }
+  )
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Tutorial with id=" + id
+        message: "Error retrieving City with id=" + id
       });
     });
 };
