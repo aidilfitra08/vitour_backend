@@ -110,7 +110,7 @@ exports.findAll = (req, res) => {
       .catch(err => {
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tutorials."
+            err.message || "Some error occurred while retrieving City."
         });
       });
   }
@@ -159,7 +159,7 @@ exports.findOne = async (req, res) => {
     }
   )
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({
