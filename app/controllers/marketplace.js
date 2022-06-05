@@ -82,7 +82,7 @@ exports.delete = (req, res) => {
   const id = req.params.id;
 
   Marketplace.destroy({
-    where: { marketplace_id: id }
+    where: { id_alamat_marketplace: id }
   })
     .then(num => {
       if (num == 1) {
