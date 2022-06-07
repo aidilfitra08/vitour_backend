@@ -2,6 +2,7 @@ const db = require("../models");
 const Merchandise = db.merchandise;
 const Op = db.Sequelize.Op;
 const response = require("../../helper/macro");
+const Image = db.image;
 
 // Create and Save a new Merchandise
 exports.create = (req, res) => {
@@ -31,7 +32,13 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   if (req.query.filter) {
     Merchandise.findAll({
-      where: {merchandise_type: req.query.filter}
+      where: {merchandise_type: req.query.filter},
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }
+      ]
     })
     .then(data => {
         response.successResponse(res, data);
@@ -43,7 +50,14 @@ exports.findAll = (req, res) => {
       });
     });
   } else {
-    Merchandise.findAll()
+    Merchandise.findAll({
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }
+      ]
+    })
     .then(data => {
         response.successResponse(res, data);
     })
@@ -60,9 +74,17 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Merchandise.findByPk(id)
+  Merchandise.findAll({
+    where: {merchandise_id: id},
+    include: [{
+      model: Image,
+      attributes: ['images_link'],
+      require: false
+      }
+    ]
+  })
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({

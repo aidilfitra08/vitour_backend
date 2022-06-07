@@ -1,7 +1,8 @@
 const db = require("../models");
 const Destination = db.destination;
 const Op = db.Sequelize.Op;
-const response = require("../../helper/macro")
+const response = require("../../helper/macro");
+const Image = db.image;
 
 // Create and Save a new Destination
 exports.create = (req, res) => {
@@ -29,7 +30,14 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  Destination.findAll()
+  Destination.findAll({
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }
+      ]
+  })
     .then(data => {
         response.successResponse(res, data);
     })
@@ -45,9 +53,17 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Destination.findByPk(id)
+  Destination.findAll({
+    where: {destination_id: id},
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }
+      ]
+  })
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({

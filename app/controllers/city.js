@@ -61,6 +61,11 @@ exports.findAll = (req, res) => {
           require: false
         },
         {
+          model: Image,
+          attributes: ['images_link'],
+          require: false
+        },
+        {
           model: Videovr,
           require: false
         }
@@ -96,6 +101,11 @@ exports.findAll = (req, res) => {
         {
           model: Merchandise,
           attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+          require: false
+        },
+        {
+          model: Image,
+          attributes: ['images_link'],
           require: false
         },
         {
@@ -147,6 +157,11 @@ exports.findOne = async (req, res) => {
         {
           model: Merchandise,
           attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+          require: false
+        },
+        {
+          model: Image,
+          attributes: ['images_link'],
           require: false
         },
         {

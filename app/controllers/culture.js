@@ -1,7 +1,9 @@
 const db = require("../models");
 const Culture = db.culture;
 const Op = db.Sequelize.Op;
-const response = require("../../helper/macro")
+const response = require("../../helper/macro");
+const Image = db.image;
+
 
 // Create and Save a new Culture
 exports.create = (req, res) => {
@@ -30,7 +32,14 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  Culture.findAll()
+  Culture.findAll({
+    include: [{
+      model: Image,
+      attributes: ['images_link'],
+      require: false
+      }
+    ]
+  })
     .then(data => {
         response.successResponse(res, data);
     })
@@ -46,9 +55,17 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Culture.findByPk(id)
+  Culture.findAll({
+    where: {culture_id: id},
+    include: [{
+      model: Image,
+      attributes: ['images_link'],
+      require: false
+      }
+    ]
+  })
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({
