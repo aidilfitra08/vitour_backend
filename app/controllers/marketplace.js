@@ -41,7 +41,7 @@ exports.findOne = (req, res) => {
 
   Marketplace.findByPk(id)
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({
