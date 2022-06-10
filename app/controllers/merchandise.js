@@ -3,6 +3,7 @@ const Merchandise = db.merchandise;
 const Op = db.Sequelize.Op;
 const response = require("../../helper/macro");
 const Image = db.image;
+const Marketplace = db.marketplace;
 
 // Create and Save a new Merchandise
 exports.create = (req, res) => {
@@ -37,6 +38,11 @@ exports.findAll = (req, res) => {
         model: Image,
         attributes: ['images_link'],
         require: false
+        },
+        {
+          model: Marketplace,
+          attributes: ['facebook'],
+          require: false
         }
       ]
     })
@@ -55,6 +61,11 @@ exports.findAll = (req, res) => {
         model: Image,
         attributes: ['images_link'],
         require: false
+        },
+        {
+          model: Marketplace,
+          attributes: ['facebook'],
+          require: false
         }
       ]
     })
