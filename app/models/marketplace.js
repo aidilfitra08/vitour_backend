@@ -11,10 +11,25 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      // Marketplace.hasOne(models.merchandise, {
+      //   foreignKey: 'marketplace_id'
+      // });
+      // models.merchandise.belongsTo(Marketplace, {
+      //   foreignKey: 'marketplace_id',
+      //   onDelete: 'CASCADE'
+      // })
+
+      models.merchandise.hasOne(Marketplace, {
+        foreignKey: 'merchandise_id'
+      });
+      Marketplace.belongsTo(models.merchandise, {
+        foreignKey: 'merchandise_id',
+        onDelete: 'CASCADE'
+      })
     }
   }
   Marketplace.init({
-    id_alamat_marketplace: {
+    marketplace_id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true
@@ -23,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     facebook: DataTypes.STRING,
     shopee: DataTypes.STRING,
     tokopedia: DataTypes.STRING,
-    bukalapak: DataTypes.INTEGER
+    bukalapak: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'marketplace',

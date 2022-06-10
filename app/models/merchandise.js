@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
       Merchandise.belongsTo(models.city, {
         foreignKey: 'city_id',
         onDelete: 'CASCADE'
-      })
+      });
+
+      
     }
   }
   Merchandise.init({
@@ -37,7 +39,6 @@ module.exports = (sequelize, DataTypes) => {
     nama_merchandise: DataTypes.STRING,
     deskripsi_merchandise: DataTypes.TEXT,
     alamat_toko: DataTypes.STRING,
-    id_alamat_marketplace: DataTypes.INTEGER,
     koordinat_toko: DataTypes.STRING,
     merchandise_type: DataTypes.STRING
   }, {
