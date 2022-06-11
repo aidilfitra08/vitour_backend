@@ -41,7 +41,7 @@ exports.findAll = (req, res) => {
         },
         {
           model: Marketplace,
-          attributes: ['facebook'],
+          attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
           require: false
         }
       ]
@@ -64,7 +64,7 @@ exports.findAll = (req, res) => {
         },
         {
           model: Marketplace,
-          attributes: ['facebook'],
+          attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
           require: false
         }
       ]
@@ -91,6 +91,11 @@ exports.findOne = (req, res) => {
       model: Image,
       attributes: ['images_link'],
       require: false
+      },
+      {
+        model: Marketplace,
+        attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
+        require: false
       }
     ]
   })
