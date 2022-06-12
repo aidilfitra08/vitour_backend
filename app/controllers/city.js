@@ -40,36 +40,36 @@ exports.findAll = async (req, res) => {
   if (req.query.filter) {
     await City.findAll({
       where: {nama_kota: req.query.filter},
-      include: [{
-        model: Culinary,
-        attributes: ['culinary_id', 'nama_kuliner'],
-        require: false
-        },
-        {
-          model: Culture,
-          attributes: ['culture_id', 'nama_budaya'],
-          require: false
-        },
-        {
-          model: Destination,
-          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-          require: false
-        },
-        {
-          model: Merchandise,
-          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-          require: false
-        },
-        {
-          model: Image,
-          attributes: ['images_link'],
-          require: false
-        },
-        {
-          model: Videovr,
-          require: false
-        }
-      ]
+      // include: [{
+      //   model: Culinary,
+      //   attributes: ['culinary_id', 'nama_kuliner'],
+      //   require: false
+      //   },
+      //   {
+      //     model: Culture,
+      //     attributes: ['culture_id', 'nama_budaya'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Destination,
+      //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Merchandise,
+      //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Image,
+      //     attributes: ['images_link'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Videovr,
+      //     require: false
+      //   }
+      // ]
     })
       .then(data => {
           response.successResponse(res, data);
@@ -83,36 +83,36 @@ exports.findAll = async (req, res) => {
   } else {
     await City.findAll({
       
-      include: [{
-        model: Culinary,
-        attributes: ['culinary_id', 'nama_kuliner'],
-        require: false
-        },
-        {
-          model: Culture,
-          attributes: ['culture_id', 'nama_budaya'],
-          require: false
-        },
-        {
-          model: Destination,
-          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-          require: false
-        },
-        {
-          model: Merchandise,
-          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-          require: false
-        },
-        {
-          model: Image,
-          attributes: ['images_link'],
-          require: false
-        },
-        {
-          model: Videovr,
-          require: false
-        }
-      ]
+      // include: [{
+      //   model: Culinary,
+      //   attributes: ['culinary_id'],
+      //   require: false
+      //   },
+      //   {
+      //     model: Culture,
+      //     attributes: ['culture_id'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Destination,
+      //     attributes: ['destination_id'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Merchandise,
+      //     attributes: ['merchandise_id'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Image,
+      //     attributes: ['images_link'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Videovr,
+      //     require: false
+      //   }
+      // ]
     })
       .then(data => {
           response.successResponse(res, data);
@@ -134,41 +134,41 @@ exports.findOne = async (req, res) => {
   //   return req.query.filter;
   // }
 
-  await City.findAll(
+  await City.findOne(
     {
       where: {
         city_id: id
       },
-      include: [{
-        model: Culinary,
-        attributes: ['culinary_id', 'nama_kuliner'],
-        require: false
-        },
-        {
-          model: Culture,
-          attributes: ['culture_id', 'nama_budaya'],
-          require: false
-        },
-        {
-          model: Destination,
-          attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-          require: false
-        },
-        {
-          model: Merchandise,
-          attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-          require: false
-        },
-        {
-          model: Image,
-          attributes: ['images_link'],
-          require: false
-        },
-        {
-          model: Videovr,
-          require: false
-        }
-      ],
+      // include: [{
+      //   model: Culinary,
+      //   attributes: ['culinary_id', 'nama_kuliner'],
+      //   require: false
+      //   },
+      //   {
+      //     model: Culture,
+      //     attributes: ['culture_id', 'nama_budaya'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Destination,
+      //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Merchandise,
+      //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Image,
+      //     attributes: ['images_link'],
+      //     require: false
+      //   },
+      //   {
+      //     model: Videovr,
+      //     require: false
+      //   }
+      // ],
       
 
     }
