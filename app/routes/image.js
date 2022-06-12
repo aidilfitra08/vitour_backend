@@ -13,6 +13,7 @@ module.exports = app => {
     router.get("/destination", image.findAllDestinationImages);
     router.get("/merchandise", image.findAllMerchandiseImages);
   
+    router.get("/", image.findAll);
     // Retrieve all published Tutorials
     // router.get("/published", tutorials.findAllPublished);
   
