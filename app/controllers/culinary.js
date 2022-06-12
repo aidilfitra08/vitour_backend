@@ -6,7 +6,7 @@ const Image = db.image;
 
 
 // Create and Save a new Culture
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.nama_kuliner) {
     res.status(400).send({
@@ -18,7 +18,7 @@ exports.create = (req, res) => {
 
   const culinary = req.body;
   // Save Tutorial in the database
-  Culinary.create(culinary)
+  await Culinary.create(culinary)
     .then(data => {
       response.successResponse(res, data);
     })
@@ -31,8 +31,8 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
-  Culinary.findAll({
+exports.findAll = async (req, res) => {
+  await Culinary.findAll({
     include: [{
       model: Image,
       attributes: ['images_link'],
@@ -52,10 +52,10 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
 
-  Culinary.findAll({
+  await Culinary.findAll({
     where: {culinary_id: id},
     include: [{
       model: Image,
@@ -75,10 +75,10 @@ exports.findOne = (req, res) => {
 };
 
 // // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
 
-  Culinary.update(req.body, {
+  await Culinary.update(req.body, {
     where: { culinary_id: id }
   })
     .then(num => {
@@ -102,10 +102,10 @@ exports.update = (req, res) => {
 };
 
 // // Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   const id = req.params.id;
 
-  Culinary.destroy({
+  await Culinary.destroy({
     where: { culinary_id: id }
   })
     .then(num => {

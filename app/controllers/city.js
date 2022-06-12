@@ -12,7 +12,7 @@ const Image = db.image;
 const Videovr = db.videovr;
 
 // Create and Save a new City
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.nama_kota) {
     res.status(400).send({
@@ -23,7 +23,7 @@ exports.create = (req, res) => {
 
   const city = req.body;
   // Save Tutorial in the database
-  City.create(city)
+  await City.create(city)
     .then(data => {
       response.successResponse(res, data);
     })
@@ -36,9 +36,9 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
   if (req.query.filter) {
-    City.findAll({
+    await City.findAll({
       where: {nama_kota: req.query.filter},
       include: [{
         model: Culinary,
@@ -81,7 +81,7 @@ exports.findAll = (req, res) => {
         });
       });
   } else {
-    City.findAll({
+    await City.findAll({
       
       include: [{
         model: Culinary,
@@ -184,10 +184,10 @@ exports.findOne = async (req, res) => {
 };
 
 // // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
 
-  City.update(req.body, {
+  await City.update(req.body, {
     where: { city_id: id }
   })
     .then(num => {
@@ -211,10 +211,10 @@ exports.update = (req, res) => {
 };
 
 // // Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   const id = req.params.id;
 
-  City.destroy({
+  await City.destroy({
     where: { city_id: id }
   })
     .then(num => {
