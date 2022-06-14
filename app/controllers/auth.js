@@ -80,7 +80,7 @@ exports.login = async (req, res) => {
           // Create token
           const token = jwt.sign(
             { user_id: user.user_id, email },
-            process.env.TOKEN_KEY,
+            process.env.SECRET_KEY,
             {
               expiresIn: "2h",
             }
@@ -109,6 +109,12 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+// exports.isSignedIn=expressjwt({
+//   secret:process.env.SECRET_KEY,
+//   userProperty:"auth",
+//   algorithms: ['HS256'],
+// })
 
 
 // Retrieve all users from the database.
