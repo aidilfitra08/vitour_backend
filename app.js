@@ -27,6 +27,7 @@ var corsOptions = {
     'https://vitour.herokuapp.com/',  // main website
     'http://localhost:3004',  // admin website
     'http://localhost:3000',
+    'http://vitour.herokuapp.com/',
   ],
   credentials: true
 };

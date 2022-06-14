@@ -74,7 +74,7 @@ exports.login = async (req, res) => {
           res.status(400).send("All input is required");
         }
         // Validate if user exist in our database
-        const user = await User.findOne({ where: email });
+        const user = await User.findOne({ where: { email: email } });
     
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
