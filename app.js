@@ -21,17 +21,18 @@ dotenv.config();
 // };
 
 //Online
-// var corsOptions = {
-//   origin: [
-//     'https://vitour-crud.vercel.app',  // admin website
-//     'https://vitour.herokuapp.com/',  // main website
-//     'http://localhost:3004',  // admin website
-//     'http://localhost:3000',
-//   ],
-// };
+var corsOptions = {
+  origin: [
+    'https://vitour-crud.vercel.app',  // admin website
+    'https://vitour.herokuapp.com/',  // main website
+    'http://localhost:3004',  // admin website
+    'http://localhost:3000',
+  ],
+  credentials: true
+};
 
-// app.use(cors(corsOptions));
-app.use(cors());
+app.use(cors(corsOptions));
+// app.use(cors());
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
