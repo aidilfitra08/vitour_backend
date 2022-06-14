@@ -28,7 +28,6 @@ var corsOptions = {
     'http://localhost:3004',  // admin website
     'http://localhost:3000',
   ],
-  credentials: false,
 };
 
 app.use(cors(corsOptions));
