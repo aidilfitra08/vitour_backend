@@ -17,7 +17,7 @@ dotenv.config();
 //     'http://localhost:3004',  // admin website
 //     'http://localhost:3000',  // main website
 //   ],
-//   credentials: true,
+//   credentials: false,
 // };
 
 //Online
@@ -26,7 +26,7 @@ var corsOptions = {
     'https://vitour-crud.vercel.app',  // admin website
     'https://vitour.herokuapp.com/',  // main website
   ],
-  credentials: true,
+  credentials: false,
 };
 
 app.use(cors(corsOptions));
