@@ -1,9 +1,10 @@
 module.exports = app => {
     const image = require("../controllers/image.js");
+    // const auth = require('../middleware/auth');
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Image
     router.post("/", image.create);
   
     // Retrieve all image
@@ -14,17 +15,20 @@ module.exports = app => {
     router.get("/merchandise", image.findAllMerchandiseImages);
   
     router.get("/", image.findAll);
-    // Retrieve all published Tutorials
-    // router.get("/published", tutorials.findAllPublished);
   
-    // // Retrieve a single Tutorial with id
+    // // Retrieve a single Image with id
     router.get("/:id", image.findOne);
   
-    // // // Update a Tutorial with id
+    // // // Update a Image with id
     router.put("/:id", image.update);
     //
-    // // // Delete a Tutorial with id
+    // // // Delete a Image with id
     router.delete("/:id", image.delete);
+
+    //Create, update, delete image with authorization
+    // router.post("/", auth, image.create);
+    // router.put("/:id", auth, image.update);
+    // router.delete("/:id", auth, image.delete);
   
     // // Delete all Tutorials
     // router.delete("/", tutorials.deleteAll);
