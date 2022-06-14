@@ -164,6 +164,19 @@ Image.findAll({
   });
 };
 
+exports.findAll = (req, res) => {
+Image.findAll()
+  .then(data => {
+      response.successResponse(res, data);
+  })
+  .catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving Images."
+    });
+  });
+};
+
 
 // // Find a single Image with an id
 exports.findOne = (req, res) => {
