@@ -25,6 +25,7 @@ var corsOptions = {
   origin: [
     'https://vitour-crud.vercel.app',  // admin website
     'https://vitour.herokuapp.com/',  // main website
+    '*'
   ],
   credentials: false,
 };
