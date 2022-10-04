@@ -74,13 +74,13 @@ exports.login = async (req, res) => {
           res.status(400).send("All input is required");
         }
         // Validate if user exist in our database
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ where: { email: email } });
     
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
           const token = jwt.sign(
             { user_id: user.user_id, email },
-            process.env.TOKEN_KEY,
+            process.env.SECRET_KEY,
             {
               expiresIn: "2h",
             }
@@ -109,6 +109,12 @@ exports.login = async (req, res) => {
         });
     }
 };
+
+// exports.isSignedIn=expressjwt({
+//   secret:process.env.SECRET_KEY,
+//   userProperty:"auth",
+//   algorithms: ['HS256'],
+// })
 
 
 // Retrieve all users from the database.

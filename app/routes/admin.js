@@ -1,5 +1,5 @@
-module.exports = app => {
-    const admin = require("../controllers/admin.js");
+// module.exports = router => {
+    const admin = require("../controllers/auth.js");
   
     var router = require("express").Router();
   
@@ -9,7 +9,7 @@ module.exports = app => {
     // login
     router.post("/login", admin.login);
 
-  
-    app.use("/api", router);
-  };
+    module.exports = router;
+    // app.use("/api", router);
+  // };
   

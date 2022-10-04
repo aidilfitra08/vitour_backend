@@ -8,6 +8,7 @@ exports.create = (req, res) => {
   // Validate request
 
   const marketplace = req.body;
+  
   // Save Tutorial in the database
   Marketplace.create(marketplace)
     .then(data => {
@@ -41,7 +42,7 @@ exports.findOne = (req, res) => {
 
   Marketplace.findByPk(id)
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({
@@ -72,7 +73,7 @@ exports.update = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Marketplace with id=" + id
+        message: "Error updating Marketplace with id=" + id + " or merchandise not exist!"
       });
     });
 };

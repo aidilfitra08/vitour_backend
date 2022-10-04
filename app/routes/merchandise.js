@@ -1,25 +1,28 @@
 module.exports = app => {
     const merchandise = require("../controllers/merchandise.js");
+    // const auth = require('../middleware/auth');
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new Marketplace
     router.post("/", merchandise.create);
   
     // Retrieve all merchandise
     router.get("/", merchandise.findAll);
   
-    // Retrieve all published Tutorials
-    // router.get("/published", tutorials.findAllPublished);
-  
-    // // Retrieve a single Tutorial with id
+    // // Retrieve a single Marketplace with id
     router.get("/:id", merchandise.findOne);
   
-    // // Update a Tutorial with id
+    // // Update a Marketplace with id
     router.put("/:id", merchandise.update);
   
-    // // Delete a Tutorial with id
+    // // Delete a Marketplace with id
     router.delete("/:id", merchandise.delete);
+
+    //Create, update, delete marketplace with authorization
+    // router.post("/", auth, marketplace.create);
+    // router.put("/:id", auth, marketplace.update);
+    // router.delete("/:id", auth, marketplace.delete);
   
     // // Delete all Tutorials
     // router.delete("/", tutorials.deleteAll);

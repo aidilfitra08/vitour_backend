@@ -1,25 +1,28 @@
 module.exports = app => {
     const videovr = require("../controllers/videovr.js");
+    // const auth = require('../middleware/auth');
   
     var router = require("express").Router();
   
-    // Create a new Tutorial
+    // Create a new VideoVR
     router.post("/", videovr.create);
   
     // Retrieve all videovr
     router.get("/", videovr.findAll);
   
-    // Retrieve all published Tutorials
-    // router.get("/published", tutorials.findAllPublished);
-  
-    // // Retrieve a single Tutorial with id
+    // // Retrieve a single VideoVR with id
     router.get("/:id", videovr.findOne);
   
-    // // Update a Tutorial with id
+    // // Update a VideoVR with id
     router.put("/:id", videovr.update);
   
-    // // Delete a Tutorial with id
+    // // Delete a VideoVR with id
     router.delete("/:id", videovr.delete);
+
+    //Create, update, delete videovr with authorization
+    // router.post("/", auth, videovr.create);
+    // router.put("/:id", auth, videovr.update);
+    // router.delete("/:id", auth, videovr.delete);
   
     // // Delete all Tutorials
     // router.delete("/", tutorials.deleteAll);

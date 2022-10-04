@@ -2,9 +2,11 @@ const db = require("../models");
 const Merchandise = db.merchandise;
 const Op = db.Sequelize.Op;
 const response = require("../../helper/macro");
+const Image = db.image;
+const Marketplace = db.marketplace;
 
 // Create and Save a new Merchandise
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.nama_merchandise) {
     res.status(400).send({
@@ -15,7 +17,7 @@ exports.create = (req, res) => {
 
   const merchandise = req.body;
   // Save Tutorial in the database
-  Merchandise.create(merchandise)
+  await Merchandise.create(merchandise)
     .then(data => {
       response.successResponse(res, data);
     })
@@ -28,10 +30,21 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
+exports.findAll = async (req, res) => {
   if (req.query.filter) {
-    Merchandise.findAll({
-      where: {merchandise_type: req.query.filter}
+    await Merchandise.findAll({
+      where: {merchandise_type: req.query.filter},
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        },
+        {
+          model: Marketplace,
+          attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
+          require: false
+        }
+      ]
     })
     .then(data => {
         response.successResponse(res, data);
@@ -43,7 +56,19 @@ exports.findAll = (req, res) => {
       });
     });
   } else {
-    Merchandise.findAll()
+    await Merchandise.findAll({
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        },
+        {
+          model: Marketplace,
+          attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
+          require: false
+        }
+      ]
+    })
     .then(data => {
         response.successResponse(res, data);
     })
@@ -57,12 +82,25 @@ exports.findAll = (req, res) => {
 };
 
 // Find a single Tutorial with an id
-exports.findOne = (req, res) => {
+exports.findOne = async (req, res) => {
   const id = req.params.id;
 
-  Merchandise.findByPk(id)
+  await Merchandise.findAll({
+    where: {merchandise_id: id},
+    include: [{
+      model: Image,
+      attributes: ['images_link'],
+      require: false
+      },
+      {
+        model: Marketplace,
+        attributes: ['whatsapp', 'facebook', 'shopee', 'tokopedia', 'bukalapak'],
+        require: false
+      }
+    ]
+  })
     .then(data => {
-      res.send(data);
+      response.successResponse(res, data);
     })
     .catch(err => {
       res.status(500).send({
@@ -72,10 +110,10 @@ exports.findOne = (req, res) => {
 };
 
 // // Update a Tutorial by the id in the request
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const id = req.params.id;
 
-  Merchandise.update(req.body, {
+  await Merchandise.update(req.body, {
     where: { merchandise_id: id }
   })
     .then(num => {
@@ -99,10 +137,10 @@ exports.update = (req, res) => {
 };
 
 // // Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
+exports.delete = async (req, res) => {
   const id = req.params.id;
 
-  Merchandise.destroy({
+  await Merchandise.destroy({
     where: { merchandise_id: id }
   })
     .then(num => {
