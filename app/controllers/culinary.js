@@ -37,8 +37,7 @@ exports.findAll = async (req, res) => {
       model: Image,
       attributes: ['images_link'],
       require: false
-      }
-    ]
+      }]
 })
     .then(data => {
         response.successResponse(res, data);

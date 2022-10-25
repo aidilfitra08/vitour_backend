@@ -3,13 +3,14 @@ const User = db.admin;
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { STRING } = require("sequelize");
 
 // Create and Save a new user
 exports.register = async (req, res) => {
   // Validate request
   try {
     // Get user input
-    const { name, email, password } = req.body;
+    const { name, email, password,} = req.body;
 
     // Validate user input
     if (!(email && password && name)) {
@@ -32,6 +33,7 @@ exports.register = async (req, res) => {
       name: name,
       email: email.toLowerCase(), // sanitize: convert email to lowercase
       password: encryptedPassword,
+      role: "user",
     });
 
     // Create token
@@ -79,7 +81,7 @@ exports.login = async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
           const token = jwt.sign(
-            { user_id: user.user_id, email },
+            { user_id: user.user_id, email, role:user.role},
             process.env.SECRET_KEY,
             {
               expiresIn: "2h",
@@ -91,7 +93,8 @@ exports.login = async (req, res) => {
           data = {
             name : user.name,
             email : user.email,
-            token : token
+            token : token,
+            role: user.role
           }
           // user
           res.status(200).send({
@@ -101,10 +104,9 @@ exports.login = async (req, res) => {
             data: data
           });
         }
-        res.status(400).send("Invalid Credentials");
     } catch (err) {
         res.status(500).send({
-        message:
+        message: 
           err.message || "Some error occurred while login."
         });
     }

@@ -1,11 +1,14 @@
 module.exports = app => {
+    // Import Controller
     const culinary = require("../controllers/culinary.js");
-    // const auth = require('../middleware/auth');
+
+    // Import Middleware
+    const auth  = require("../middleware/auth.js")
   
     var router = require("express").Router();
   
     // Create a new Culinary
-    router.post("/", culinary.create);
+    router.post("/", auth, culinary.create);
   
     // Retrieve all culinary
     router.get("/", culinary.findAll);
@@ -14,10 +17,10 @@ module.exports = app => {
     router.get("/:id", culinary.findOne);
   
     // // Update a Culinary with id
-    router.put("/:id", culinary.update);
+    router.put("/:id", auth, culinary.update);
   
     // // Delete a Culinary with id
-    router.delete("/:id", culinary.delete);
+    router.delete("/:id", auth, culinary.delete);
 
     //Create, update, delete culinary with authorization
     // router.post("/", auth, culinary.create);

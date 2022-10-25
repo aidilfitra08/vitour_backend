@@ -1,0 +1,1 @@
+const merchandise = require('../models/merchandise')

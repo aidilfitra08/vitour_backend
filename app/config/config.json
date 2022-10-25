@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "punyasaya",
-    "database": "testdb",
-    "host": "127.0.0.1",
+    "username": "uzfpryiyagmcjh",
+    "password": "7a6035f3f0d3846b924234ee134f73028785b98657e5d872160152ded0baa744",
+    "database": "d2ceam1jrbbd6e",
+    "host": "ec2-3-229-11-55.compute-1.amazonaws.com",
     "dialect": "postgres"
   },
   "test": {

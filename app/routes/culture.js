@@ -1,11 +1,15 @@
 module.exports = app => {
+    
+    // Import Controllers
     const culture = require("../controllers/culture.js");
-    // const auth = require('../middleware/auth');
+
+    // Import Middleware
+    const auth  = require("../middleware/auth.js")
   
     var router = require("express").Router();
   
     // Create a new Culture
-    router.post("/", culture.create);
+    router.post("/", auth, culture.create);
   
     // Retrieve all culture
     router.get("/", culture.findAll);
@@ -14,10 +18,10 @@ module.exports = app => {
     router.get("/:id", culture.findOne);
   
     // // Update a Culture with id
-    router.put("/:id", culture.update);
+    router.put("/:id", auth, culture.update);
   
     // // Delete a Culture with id
-    router.delete("/:id", culture.delete);
+    router.delete("/:id", auth, culture.delete);
 
     //Create, update, delete culture with authorization
     // router.post("/", auth, culture.create);

@@ -1,11 +1,14 @@
 module.exports = app => {
+    // Import Controllers
     const merchandise = require("../controllers/merchandise.js");
-    // const auth = require('../middleware/auth');
+
+    // Import Middleware
+    const auth  = require("../middleware/auth.js")
   
     var router = require("express").Router();
   
     // Create a new Marketplace
-    router.post("/", merchandise.create);
+    router.post("/", auth, merchandise.create);
   
     // Retrieve all merchandise
     router.get("/", merchandise.findAll);
@@ -14,10 +17,10 @@ module.exports = app => {
     router.get("/:id", merchandise.findOne);
   
     // // Update a Marketplace with id
-    router.put("/:id", merchandise.update);
+    router.put("/:id", auth,merchandise.update);
   
     // // Delete a Marketplace with id
-    router.delete("/:id", merchandise.delete);
+    router.delete("/:id", auth, merchandise.delete);
 
     //Create, update, delete marketplace with authorization
     // router.post("/", auth, marketplace.create);

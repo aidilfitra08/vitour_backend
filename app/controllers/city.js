@@ -40,11 +40,11 @@ exports.findAll = async (req, res) => {
   if (req.query.filter) {
     await City.findAll({
       where: {nama_kota: req.query.filter},
-      // include: [{
-      //   model: Culinary,
-      //   attributes: ['culinary_id', 'nama_kuliner'],
-      //   require: false
-      //   },
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }]
       //   {
       //     model: Culture,
       //     attributes: ['culture_id', 'nama_budaya'],
@@ -82,6 +82,11 @@ exports.findAll = async (req, res) => {
       });
   } else {
     await City.findAll({
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }]
       
       // include: [{
       //   model: Culinary,

@@ -65,9 +65,7 @@ require("./app/routes/destination")(app);
 require("./app/routes/merchandise")(app);
 require("./app/routes/videovr")(app);
 require("./app/routes/searchbar")(app);
-var adminRoutes = require("./app/routes/admin");
-
-app.use("/api", adminRoutes);
+require("./app/routes/admin")(app);
 
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error

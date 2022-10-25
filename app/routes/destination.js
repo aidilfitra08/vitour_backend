@@ -1,11 +1,14 @@
 module.exports = app => {
+    // Import Controllers
     const destination = require("../controllers/destination.js");
-    // const auth = require('../middleware/auth');
+
+    // Import Middleware
+    const auth  = require("../middleware/auth.js")
   
     var router = require("express").Router();
   
     // Create a new Destination
-    router.post("/", destination.create);
+    router.post("/", auth, destination.create);
   
     // Retrieve all destination
     router.get("/", destination.findAll);
@@ -14,10 +17,10 @@ module.exports = app => {
     router.get("/:id", destination.findOne);
   
     // // Update a Destination with id
-    router.put("/:id", destination.update);
+    router.put("/:id", auth,destination.update);
   
     // // Delete a Destination with id
-    router.delete("/:id", destination.delete);
+    router.delete("/:id", auth, destination.delete);
 
     //Create, update, delete destination with authorization
     // router.post("/", auth, destination.create);
