@@ -38,48 +38,97 @@ exports.create = async (req, res) => {
 // Retrieve all Tutorials from the database.
 exports.findAll = async (req, res) => {
   if (req.query.filter) {
-    await City.findAll({
-      where: {nama_kota: req.query.filter},
-      include: [{
-        model: Image,
-        attributes: ['images_link'],
-        require: false
-        }]
-      //   {
-      //     model: Culture,
-      //     attributes: ['culture_id', 'nama_budaya'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Destination,
-      //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Merchandise,
-      //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Image,
-      //     attributes: ['images_link'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Videovr,
-      //     require: false
-      //   }
-      // ]
-    })
-      .then(data => {
-          response.successResponse(res, data);
+    if (req.query.type_gambar) {
+      await City.findAll({
+        where: {nama_kota: req.query.filter},
+        include: [{
+          model: Image,
+          where : {
+            type_gambar: req.query.type_gambar
+          },
+          attributes: ['images_link'],
+          require: false
+          }]
+        //   {
+        //     model: Culture,
+        //     attributes: ['culture_id', 'nama_budaya'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Destination,
+        //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Merchandise,
+        //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Image,
+        //     attributes: ['images_link'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Videovr,
+        //     require: false
+        //   }
+        // ]
       })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
+        .then(data => {
+            response.successResponse(res, data);
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while retrieving city API."
+          });
         });
-      });
+    } else {
+      await City.findAll({
+        where: {nama_kota: req.query.filter},
+        include: [{
+          model: Image,
+          attributes: ['images_link'],
+          require: false
+          }]
+        //   {
+        //     model: Culture,
+        //     attributes: ['culture_id', 'nama_budaya'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Destination,
+        //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Merchandise,
+        //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Image,
+        //     attributes: ['images_link'],
+        //     require: false
+        //   },
+        //   {
+        //     model: Videovr,
+        //     require: false
+        //   }
+        // ]
+      })
+        .then(data => {
+            response.successResponse(res, data);
+        })
+        .catch(err => {
+          res.status(500).send({
+            message:
+              err.message || "Some error occurred while retrieving city API."
+          });
+        });
+    }
+    
   } else {
     await City.findAll({
       include: [{
