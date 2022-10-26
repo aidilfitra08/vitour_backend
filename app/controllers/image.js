@@ -12,7 +12,12 @@ exports.create = (req, res) => {
     });
     return;
   }
-
+  if (!req.body.type_gambar) {
+    res.status(400).send({
+      message: "type_gambar kosong!"
+    });
+    return;
+  }
 
   const image = req.body;
   // Save Tutorial in the database
