@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'city_id',
         onDelete: 'CASCADE'
       });
-
       
     }
   }
@@ -36,6 +35,8 @@ module.exports = (sequelize, DataTypes) => {
         as: 'city_id'
       }
     },
+    price : DataTypes.INTEGER,
+    variant : DataTypes.INTEGER,
     nama_merchandise: DataTypes.STRING,
     deskripsi_merchandise: DataTypes.TEXT,
     alamat_toko: DataTypes.STRING,

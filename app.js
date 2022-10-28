@@ -66,6 +66,7 @@ require("./app/routes/merchandise")(app);
 require("./app/routes/videovr")(app);
 require("./app/routes/searchbar")(app);
 require("./app/routes/admin")(app);
+require("./app/routes/cart")(app);
 
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error
