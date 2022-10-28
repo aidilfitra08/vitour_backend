@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new VideoVR
-    router.post("/", auth, videovr.create);
+    router.post("/", videovr.create);
   
     // Retrieve all videovr
     router.get("/", videovr.findAll);
@@ -17,10 +17,10 @@ module.exports = app => {
     router.get("/:id", videovr.findOne);
   
     // // Update a VideoVR with id
-    router.put("/:id", auth, videovr.update);
+    router.put("/:id", videovr.update);
   
     // // Delete a VideoVR with id
-    router.delete("/:id", auth, videovr.delete);
+    router.delete("/:id", videovr.delete);
 
     //Create, update, delete videovr with authorization
     // router.post("/", auth, videovr.create);

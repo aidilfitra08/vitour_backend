@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Destination
-    router.post("/", auth, destination.create);
+    router.post("/", auth.adminPage, destination.create);
   
     // Retrieve all destination
     router.get("/", destination.findAll);
@@ -17,10 +17,10 @@ module.exports = app => {
     router.get("/:id", destination.findOne);
   
     // // Update a Destination with id
-    router.put("/:id", auth,destination.update);
+    router.put("/:id", auth.adminPage,destination.update);
   
     // // Delete a Destination with id
-    router.delete("/:id", auth, destination.delete);
+    router.delete("/:id", auth.adminPage, destination.delete);
 
     //Create, update, delete destination with authorization
     // router.post("/", auth, destination.create);

@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Culinary
-    router.post("/", auth, culinary.create);
+    router.post("/", auth.adminPage, culinary.create);
   
     // Retrieve all culinary
     router.get("/", culinary.findAll);
@@ -17,10 +17,10 @@ module.exports = app => {
     router.get("/:id", culinary.findOne);
   
     // // Update a Culinary with id
-    router.put("/:id", auth, culinary.update);
+    router.put("/:id", auth.adminPage, culinary.update);
   
     // // Delete a Culinary with id
-    router.delete("/:id", auth, culinary.delete);
+    router.delete("/:id", auth.adminPage, culinary.delete);
 
     //Create, update, delete culinary with authorization
     // router.post("/", auth, culinary.create);

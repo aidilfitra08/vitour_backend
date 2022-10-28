@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new City
-    router.post("/", auth, city.create);
+    router.post("/", auth.adminPage, city.create);
 
     // Retrieve all city
     router.get("/", city.findAll);
@@ -17,10 +17,10 @@ module.exports = app => {
     router.get("/:id", city.findOne);
   
     // // Update a City with id
-    router.put("/:id", auth, city.update);
+    router.put("/:id", auth.adminPage, city.update);
 
     // // Delete a City with id
-    router.delete("/:id", auth, city.delete);
+    router.delete("/:id", auth.adminPage, city.delete);
 
     //Create, update, delete city with authorization
     // router.post("/", auth, city.create);

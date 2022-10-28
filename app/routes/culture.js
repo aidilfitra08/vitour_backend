@@ -9,7 +9,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Culture
-    router.post("/", auth, culture.create);
+    router.post("/", auth.adminPage, culture.create);
   
     // Retrieve all culture
     router.get("/", culture.findAll);
@@ -18,10 +18,10 @@ module.exports = app => {
     router.get("/:id", culture.findOne);
   
     // // Update a Culture with id
-    router.put("/:id", auth, culture.update);
+    router.put("/:id", auth.adminPage, culture.update);
   
     // // Delete a Culture with id
-    router.delete("/:id", auth, culture.delete);
+    router.delete("/:id", auth.adminPage, culture.delete);
 
     //Create, update, delete culture with authorization
     // router.post("/", auth, culture.create);

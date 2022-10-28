@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Image
-    router.post("/", auth, image.create);
+    router.post("/", auth.webPage, image.create);
   
     // Retrieve all image
     router.get("/city", image.findAllCityImages);
@@ -23,10 +23,10 @@ module.exports = app => {
     router.get("/:id", image.findOne);
   
     // // // Update a Image with id
-    router.put("/:id", auth, image.update);
+    router.put("/:id", auth.webPage, image.update);
     //
     // // // Delete a Image with id
-    router.delete("/:id", auth, image.delete);
+    router.delete("/:id", auth.webPage, image.delete);
 
     //Create, update, delete image with authorization
     // router.post("/", auth, image.create);

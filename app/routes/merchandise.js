@@ -8,7 +8,7 @@ module.exports = app => {
     var router = require("express").Router();
   
     // Create a new Marketplace
-    router.post("/", auth, merchandise.create);
+    router.post("/", auth.webPage, merchandise.create);
   
     // Retrieve all merchandise
     router.get("/", merchandise.findAll);
@@ -17,10 +17,10 @@ module.exports = app => {
     router.get("/:id", merchandise.findOne);
   
     // // Update a Marketplace with id
-    router.put("/:id", auth,merchandise.update);
+    router.put("/:id", auth.webPage,merchandise.update);
   
     // // Delete a Marketplace with id
-    router.delete("/:id", auth, merchandise.delete);
+    router.delete("/:id", auth.webPage, merchandise.delete);
 
     //Create, update, delete marketplace with authorization
     // router.post("/", auth, marketplace.create);
