@@ -9,7 +9,15 @@ const jwt = require('jsonwebtoken');
 // Create and Save a new City
 exports.create = async (req, res) => {
 
-  const cart = req.body;
+  // let cart = req.body;
+  user_id = req.user_id_loggedin;
+  let cart = {
+    merchandise_id : req.body.merchandise_id,
+    price : req.body.price,
+    quantity : req.body.quantity,
+    user_id : user_id
+  }
+  // response.successResponse(res, cart);
   // Save Tutorial in the database
   await Cart.create(cart)
     .then(data => {
@@ -171,9 +179,7 @@ exports.findAll = async (req, res) => {
 
 // Find a single Tutorial with an id
 exports.getCarts = async (req, res) => {
-  const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-  let user_id = decodedToken.user_id;
+  user_id = req.user_id_loggedin;
   user_id = user_id.toString();
   // const merchId = req.body.merchandise_id;
   // if (!req.query.filter) {
@@ -182,16 +188,16 @@ exports.getCarts = async (req, res) => {
   await Cart.findAll(
     {
       where: {user_id: user_id},
-      // include: [
-      // {
-      //   model: Merchandise,
-      //   attributes: ['nama_merchandise', 'price','variant',],
-      //   include: [{
-      //     model: Image,
-      //     attributes: ['images_link'],
-      //     require: false
-      //     }]
-      // }]
+      include: [
+      {
+        model: Merchandise,
+        attributes: ['nama_merchandise', 'price','variant',],
+        include: [{
+          model: Image,
+          attributes: ['images_link'],
+          require: false
+          }]
+      }]
       //   {
       //     model: Culture,
       //     attributes: ['culture_id', 'nama_budaya'],
@@ -220,7 +226,50 @@ exports.getCarts = async (req, res) => {
       }
   )
     .then(data => {
+      let data_output = []
+      // for (const key in data) {
+      //   let cart_item = {
+      //     cart_id : data[key].cart_id,
+      //     merchandise_id : data[key].merchandise_id,
+      //     nama_merchandise : data[key].merchandise.nama_merchandise,
+      //     price : data[key].price,
+      //     variant : data[key].merchandise.variant,
+      //     quantity : data[key].quantity,
+      //     image_link : data[key].merchandise.image_link
+      //   };
+      // }
+      let sub_total_items = 0
+      for (let index = 0; index < data.length; index++) {
+        data_output[index] = {
+          cart_id : data[index].cart_id,
+          merchandise_id : data[index].merchandise_id,
+          nama_merchandise : data[index].merchandise.nama_merchandise,
+          price : data[index].price,
+          variant : data[index].merchandise.variant,
+          quantity : data[index].quantity,
+          image_link : data[index].merchandise.images[0].images_link,
+          subtotal_price_item : data[index].price * data[index].quantity
+        }
+
+        sub_total_items += data_output[index].subtotal_price_item;
+
+      }
+
+      let output = {
+        sub_total_price : sub_total_items,
+        cart_item : data_output
+      }
+      // const output = {
+      //   cart_id : data.cart_id,
+      //   merchandise_id : data.merchandise_id,
+      //   nama_merchandise : data.merchandise.nama_merchandise,
+      //   price : data.price,
+      //   variant : data.merchandise.variant,
+      //   quantity : data.quantity,
+      //   image_link : data.merchandise.image_link
+      // };
       response.successResponse(res, data);
+      
     })
     .catch(err => {
       res.status(500).send({
@@ -257,28 +306,28 @@ exports.update = async (req, res) => {
 };
 
 // // Delete a Tutorial with the specified id in the request
-exports.delete = async (req, res) => {
-  const id = req.params.id;
+exports.deleteItem = async (req, res) => {
+  const id = req.params.cart_id;
 
-  await City.destroy({
-    where: { city_id: id }
+  await Cart.destroy({
+    where: { cart_id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
             status: 200,
             success: true,
-            message: "City was deleted successfully!"
+            message: "cart was deleted successfully!"
         });
       } else {
         res.status(404).send({
-          message: `City with id=${id} not found!`
+          message: `cart with id=${id} not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete City with id=" + id
+        message: "Could not delete cart with id=" + id
       });
     });
 };
