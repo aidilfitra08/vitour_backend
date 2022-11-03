@@ -11,11 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.city.hasMany(VideoVR, {
-        foreignKey: 'city_id'
+      models.destination.hasMany(VideoVR, {
+        foreignKey: 'destination_id'
       });
-      VideoVR.belongsTo(models.city, {
-        foreignKey: 'city_id',
+      VideoVR.belongsTo(models.destination, {
+        foreignKey: 'destination_id',
         onDelete: 'CASCADE'
       })
     }
@@ -26,12 +26,12 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true
     },
-    city_id : {
+    destination_id : {
       type: DataTypes.INTEGER,
       references: {
-        model: 'cities',
-        key: 'city_id',
-        as: 'city_id'
+        model: 'destinations',
+        key: 'destination_id',
+        as: 'destination_id'
       }
     },
     link_video: DataTypes.STRING,
