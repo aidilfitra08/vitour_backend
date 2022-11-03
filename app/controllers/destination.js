@@ -66,6 +66,11 @@ exports.findOne = (req, res) => {
         model: Image,
         attributes: ['images_link'],
         require: false
+        },
+        {
+          model:Videovr,
+          attributes:['link_video'],
+          require:false
         }
       ]
   })
