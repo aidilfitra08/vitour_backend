@@ -32,13 +32,31 @@ exports.create = async (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = async (req, res) => {
-  await Culture.findAll({
-    include: [{
+  if(req.query.filter){
+    await Culture.findAll({
+      where:{city_id:req.query.filter},
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+      }]
+    })
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Cultures."
+        });
+      });
+  } else{
+    await Culture.findAll({
+      include: [{
       model: Image,
       attributes: ['images_link'],
       require: false
-      }
-    ]
+      }]
   })
     .then(data => {
         response.successResponse(res, data);
@@ -46,9 +64,10 @@ exports.findAll = async (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while retrieving Cultures."
+          err.message || "Some error occurred while retrieving City."
       });
     });
+  }
 };
 
 // Find a single Tutorial with an id

@@ -4,32 +4,46 @@ const Op = db.Sequelize.Op;
 const response = require("../../helper/macro");
 const Image = db.image;
 const Merchandise = db.merchandise;
+const Order = db.order;
+const midtransClient = require('midtrans-client');
 const jwt = require('jsonwebtoken');
 
+var coreApi = new midtransClient.CoreApi({
+isProduction : false,
+serverKey : 'SB-Mid-server-GUOyTG9INluP0ZKvjC-MP9_0',
+clientKey : 'SB-Mid-client-Ge7_YQoJgeR8a5y6'
+});
 // Create and Save a new City
 exports.create = async (req, res) => {
-
-  // let cart = req.body;
-  user_id = req.user_id_loggedin;
-  let cart = {
-    merchandise_id : req.body.merchandise_id,
-    price : req.body.price,
-    quantity : req.body.quantity,
-    user_id : user_id
-  }
-  // response.successResponse(res, cart);
-  // Save Tutorial in the database
-  await Cart.create(cart)
-    .then(data => {
-      response.successResponse(res, data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the City."
-      });
+  coreApi.charge(req.body).then((chargeResponse)=>{
+    var dataOrder = {
+        order_id : chargeResponse.order_id,
+        user_id : req.body.user_id,
+        total_price: req.body.total_price,
+        response_midtrans:JSON.stringify(chargeResponse)
+    }
+    Order.create(dataOrder).then(data=>{
+        res.json({
+            status:true,
+            pesan:"Berhasil Order",
+            data:chargeResponse
+        });
+    }).catch(err=>{
+        res.json({
+            status:false,
+            pesan:"Gagal Order:" + err.message,
+            data:[]
+         });
     });
-};
+
+  }).catch((e)=>{
+    res.json({
+        status:false,
+        pesan:"Gagal Tampil" + e.message,
+        data:[]
+    });
+  });
+
 
 // Retrieve all Tutorials from the database.
 exports.findAll = async (req, res) => {
@@ -329,4 +343,4 @@ exports.deleteItem = async (req, res) => {
       });
     });
 };
-
+}

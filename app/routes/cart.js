@@ -15,7 +15,7 @@ module.exports = app => {
     // router.route("/add",cartauth,cart.addItem);
     
     // // delete item from cart
-    router.route("/delete", auth.webPage,cart.deleteItem);
+    router.delete("/:id", auth.webPage,cart.deleteItem);
     
     // // increment item quantity
     // router.route("/increment",cartauth,cart.increaseItemQuantity);

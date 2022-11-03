@@ -11,6 +11,8 @@ app.set('secretKey', process.env.SECRET_KEY);
 
 dotenv.config();
 
+// app.use('order', orderRouter);
+
 //Local
 // var corsOptions = {
 //   origin: [
@@ -67,6 +69,8 @@ require("./app/routes/videovr")(app);
 require("./app/routes/searchbar")(app);
 require("./app/routes/admin")(app);
 require("./app/routes/cart")(app);
+require("./app/routes/order")(app);
+// var orderRouter = require('./routes/order');
 
 // express doesn't consider not found 404 as an error so we need to handle 404 explicitly
 // handle 404 error

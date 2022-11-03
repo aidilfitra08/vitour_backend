@@ -32,22 +32,42 @@ exports.create = async (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = async (req, res) => {
-  await Culinary.findAll({
-    include: [{
-      model: Image,
-      attributes: ['images_link'],
-      require: false
+  if(req.query.filter){
+    await Culinary.findAll({
+      where:{city_id: req.query.filter},
+      include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
       }]
-})
-    .then(data => {
-        response.successResponse(res, data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Culinarys."
+  })
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Culinarys."
+        });
       });
-    });
+  } else {
+    await Culinary.findAll({
+        include: [{
+        model: Image,
+        attributes: ['images_link'],
+        require: false
+        }]
+    })
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving City."
+        });
+      });
+  }
 };
 
 // Find a single Tutorial with an id

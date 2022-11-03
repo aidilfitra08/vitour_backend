@@ -48,7 +48,7 @@ exports.webPage = async (req, res, next) => {
     }
   } catch {
     res.status(401).json({
-      error: 'User Does Not Allowed to do This Action'
+      error: 'Action does not allowed'
     });
   }
 };

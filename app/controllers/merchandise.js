@@ -33,7 +33,7 @@ exports.create = async (req, res) => {
 exports.findAll = async (req, res) => {
   if (req.query.filter) {
     await Merchandise.findAll({
-      where: {merchandise_type: req.query.filter},
+      where: {city_id: req.query.filter},
       include: [{
         model: Image,
         attributes: ['images_link'],
