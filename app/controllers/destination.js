@@ -2,7 +2,9 @@ const db = require("../models");
 const Destination = db.destination;
 const Op = db.Sequelize.Op;
 const response = require("../../helper/macro");
+const videovr = require("../routes/videovr");
 const Image = db.image;
+const Videovr = db.videovr;
 
 // Create and Save a new Destination
 exports.create = (req, res) => {
@@ -35,8 +37,13 @@ exports.findAll = (req, res) => {
         model: Image,
         attributes: ['images_link'],
         require: false
-        }
-      ]
+        },
+      {
+        model:Videovr,
+        attributes:['link_video'],
+        require:false
+      }]
+
   })
     .then(data => {
         response.successResponse(res, data);
