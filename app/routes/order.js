@@ -9,22 +9,23 @@ module.exports = app => {
         clientKey: 'SB-Mid-client-Ge7_YQoJgeR8a5y6'
     });
     
-        router.get('/',function(req,res,next){
-            Order.findAll().then(data=>{
-                res.json({
-                    status:true,
-                    pesan:"Berhasil Tampil",
-                    data:data
-                });
-            }).catch(err=>{
-                res.json({
-                    status:false,
-                    pesan:"Gagal Tampil" + err.message,
-                    data:[]
-                });
-            });
-        });
+        // router.get('/',function(req,res,next){
+        //     Order.findAll().then(data=>{
+        //         res.json({
+        //             status:true,
+        //             pesan:"Berhasil Tampil",
+        //             data:data
+        //         });
+        //     }).catch(err=>{
+        //         res.json({
+        //             status:false,
+        //             pesan:"Gagal Tampil" + err.message,
+        //             data:[]
+        //         });
+        //     });
+        // });
         router.post('/notifikasi',Order.updateNotifikasi)
+        router.get('/', Order.findAll)
         router.post('/charge',Order.create)
         app.use("/api/order", router);
 };

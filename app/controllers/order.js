@@ -33,7 +33,8 @@ exports.create = async (req, res) => {
         order_id : chargeResponse.order_id,
         user_id : req.body.user_id,
         total_price: req.body.gross_amount,
-        response_midtrans:JSON.stringify(chargeResponse)
+        response_midtrans:JSON.stringify(chargeResponse),
+        status:chargeResponse.transaction_status
     }
     Order.create(dataOrder).then(data=>{
         res.json({
@@ -63,7 +64,10 @@ exports.updateNotifikasi = async (req, res) => {
   .then((statusResponse)=>{
     let orderId = statusResponse.order_id;
     let responseMidtrans = JSON.stringify(statusResponse);
-    Order.update({response_midtrans:responseMidtrans},{
+    Order.update({
+      response_midtrans:responseMidtrans,
+      status:statusResponse.transaction_status
+    },{
       where:{order_id:orderId}
     }).then(()=>{
       res.json({
@@ -86,16 +90,7 @@ exports.updateNotifikasi = async (req, res) => {
 exports.findAll = async (req, res) => {
   if (req.query.filter) {
     if (req.query.type_gambar) {
-      await City.findAll({
-        where: {nama_kota: req.query.filter},
-        include: [{
-          model: Image,
-          where : {
-            type_gambar: req.query.type_gambar
-          },
-          attributes: ['images_link'],
-          require: false
-          }]
+      await Order.findAll({
         //   {
         //     model: Culture,
         //     attributes: ['culture_id', 'nama_budaya'],
@@ -132,38 +127,7 @@ exports.findAll = async (req, res) => {
           });
         });
     } else {
-      await City.findAll({
-        where: {nama_kota: req.query.filter},
-        include: [{
-          model: Image,
-          attributes: ['images_link'],
-          require: false
-          }]
-        //   {
-        //     model: Culture,
-        //     attributes: ['culture_id', 'nama_budaya'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Destination,
-        //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Merchandise,
-        //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Image,
-        //     attributes: ['images_link'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Videovr,
-        //     require: false
-        //   }
-        // ]
+      await Order.findAll({
       })
         .then(data => {
             response.successResponse(res, data);
@@ -177,13 +141,7 @@ exports.findAll = async (req, res) => {
     }
     
   } else {
-    await City.findAll({
-      include: [{
-        model: Image,
-        attributes: ['images_link'],
-        require: false
-        }]
-      
+    await Order.findAll({
       // include: [{
       //   model: Culinary,
       //   attributes: ['culinary_id'],

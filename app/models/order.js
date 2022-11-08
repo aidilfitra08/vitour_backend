@@ -29,6 +29,10 @@ module.exports = (sequelize, DataTypes) => {
     response_midtrans: {
       type: DataTypes.TEXT,
       allowNull:true
+    },
+    status:{
+      type: DataTypes.STRING,
+      allowNull:true
     }
 
   }, {
