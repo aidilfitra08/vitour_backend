@@ -7,6 +7,7 @@ const Merchandise = db.merchandise;
 const Order = db.order;
 const midtransClient = require('midtrans-client');
 const jwt = require('jsonwebtoken');
+const { INTEGER } = require("sequelize");
 
 var coreApi = new midtransClient.CoreApi({
 isProduction : false,
@@ -15,11 +16,23 @@ clientKey : 'SB-Mid-client-Ge7_YQoJgeR8a5y6'
 });
 // Create and Save a new City
 exports.create = async (req, res) => {
-  coreApi.charge(req.body).then((chargeResponse)=>{
+  var d = new Date();
+  let id = d.getHours()+""+d.getMinutes()+""+d.getSeconds()+""+d.getMilliseconds();
+  let request = {
+    payment_type: req.body.payment_type,
+    bank_transfer: {
+      bank: req.body.bank
+    },
+    transaction_details: {
+      order_id: id,
+      gross_amount: req.body.gross_amount
+    },
+  }
+  coreApi.charge(request).then((chargeResponse)=>{
     var dataOrder = {
         order_id : chargeResponse.order_id,
         user_id : req.body.user_id,
-        total_price: req.body.total_price,
+        total_price: req.body.gross_amount,
         response_midtrans:JSON.stringify(chargeResponse)
     }
     Order.create(dataOrder).then(data=>{
@@ -43,6 +56,30 @@ exports.create = async (req, res) => {
         data:[]
     });
   });
+
+exports.updateNotifikasi = async (req, res) => {
+  // const id = req.params.id;
+  coreApi.transaction.notification(req.body)
+  .then((statusResponse)=>{
+    let orderId = statusResponse.order_id;
+    let responseMidtrans = JSON.stringify(statusResponse);
+    Order.update({response_midtrans:responseMidtrans},{
+      where:{order_id:orderId}
+    }).then(()=>{
+      res.json({
+        status:true,
+        pesan:"Berhasil Notifikasi",
+        data:[]
+      });
+    }).catch(err =>{
+      res.status(500).json({
+        status:false,
+        pesan: "Gagal Notifikasi",
+        data:[]
+      });
+    });
+  });
+};
 
 
 // Retrieve all Tutorials from the database.

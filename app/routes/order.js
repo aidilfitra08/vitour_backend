@@ -24,7 +24,7 @@ module.exports = app => {
                 });
             });
         });
-    
+        router.post('/notifikasi',Order.updateNotifikasi)
         router.post('/charge',Order.create)
         app.use("/api/order", router);
 };
