@@ -56,7 +56,7 @@ exports.create = async (req, res) => {
         data:[]
     });
   });
-
+}
 exports.updateNotifikasi = async (req, res) => {
   // const id = req.params.id;
   coreApi.transaction.notification(req.body)
@@ -380,4 +380,3 @@ exports.deleteItem = async (req, res) => {
       });
     });
 };
-}
