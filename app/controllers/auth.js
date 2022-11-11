@@ -79,7 +79,11 @@ exports.login = async (req, res) => {
         // Validate if user exist in our database
         const user = await User.findOne({ where: { email: email } });
         if(!user){
-          res.status(400).send("This Email Haven't Registered")
+          res.status(400).send({
+            status: 400,
+            success: false,
+            message: "email haven't registered yet",
+          });
         }
     
         if (user && (await bcrypt.compare(password, user.password))) {
