@@ -4,6 +4,7 @@ const Op = db.Sequelize.Op;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { STRING } = require("sequelize");
+const { restart } = require("nodemon");
 
 // Create and Save a new user
 exports.register = async (req, res) => {
@@ -77,6 +78,9 @@ exports.login = async (req, res) => {
         }
         // Validate if user exist in our database
         const user = await User.findOne({ where: { email: email } });
+        if(!user){
+          res.status(400).send("This Email Haven't Registered")
+        }
     
         if (user && (await bcrypt.compare(password, user.password))) {
           // Create token
