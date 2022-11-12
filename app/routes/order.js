@@ -27,5 +27,6 @@ module.exports = app => {
         router.post('/notifikasi',Order.updateNotifikasi)
         router.get('/', Order.findAll)
         router.post('/charge',Order.create)
+        router.get("/:id", Order.findOne);
         app.use("/api/order", router);
 };

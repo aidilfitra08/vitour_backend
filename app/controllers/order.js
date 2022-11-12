@@ -155,3 +155,19 @@ exports.findAll = async (req, res) => {
   }
   
 };
+
+exports.findOne = async (req, res) => {
+  const id = req.params.id;
+
+  await Order.findAll({
+    where: {order_id: id},
+  })
+    .then(data => {
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Order with id=" + id
+      });
+    });
+};
