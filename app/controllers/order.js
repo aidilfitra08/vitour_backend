@@ -171,3 +171,30 @@ exports.findOne = async (req, res) => {
       });
     });
 };
+
+exports.update = (req, res) => {
+  const id = req.params.id;
+
+  Order.update(req.body, {
+    where: { order_id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({ 
+            status: 200,
+            success: true,
+            message: "Order was updated successfully."
+        });
+      } else {
+        res.status(404).send({
+          message: `Cannot update Order with id=${id}. Maybe Marketplace was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Order with id=" + id + " or merchandise not exist!"
+      });
+    });
+};
+
