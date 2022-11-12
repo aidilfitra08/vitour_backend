@@ -87,8 +87,7 @@ exports.login = async (req, res) => {
         }
     
         if (user && (await bcrypt.compare(password, user.password))) {
-          // Create token
-          const token = jwt.sign(
+           const token = jwt.sign(
             { user_id: user.user_id, email, role:user.role},
             process.env.SECRET_KEY,
             {
@@ -110,6 +109,12 @@ exports.login = async (req, res) => {
             success: true,
             message: "user login",
             data: data
+          });
+        } else {
+          res.status(400).send({
+            status:400,
+            success:false,
+            message:"Wrong Password"
           });
         }
     } catch (err) {
