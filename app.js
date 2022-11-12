@@ -67,7 +67,7 @@ require("./app/routes/destination")(app);
 require("./app/routes/merchandise")(app);
 require("./app/routes/videovr")(app);
 require("./app/routes/searchbar")(app);
-require("./app/routes/admin")(app);
+require("./app/routes/user")(app);
 require("./app/routes/cart")(app);
 require("./app/routes/order")(app);
 // var orderRouter = require('./routes/order');
