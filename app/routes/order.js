@@ -31,8 +31,14 @@ module.exports = app => {
         router.get('/',auth.adminPage,Order.findAll)
         // Charge Payment to Midtrans
         router.post('/charge',auth.webPage,Order.create)
-        // Retrieve specific order 
+
+        // Retrieve specific order (By order_id)
         router.get("/:id", auth.webPage,Order.findOne);
+        // Retrieve specific order (By Logged In user_id)
+        router.get("/user/find",auth.webPage,Order.findOne2)
+        // Retrieve specific order (By Params user_id)
+        router.get("/use/:id",auth.webPage,Order.findOne3)
+        
         // Update Order
         router.put("/:id",auth.adminPage,Order.update);
         // Delete specific order

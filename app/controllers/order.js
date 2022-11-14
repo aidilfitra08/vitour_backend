@@ -29,9 +29,11 @@ exports.create = async (req, res) => {
     },
   }
   coreApi.charge(request).then((chargeResponse)=>{
+    user_id = req.user_id_loggedin;
+    user_id = user_id.toString();
     var dataOrder = {
         order_id : chargeResponse.order_id,
-        user_id : req.body.user_id,
+        user_id : user_id,
         total_price: req.body.gross_amount,
         response_midtrans:JSON.stringify(chargeResponse),
         status:chargeResponse.transaction_status
@@ -91,31 +93,6 @@ exports.findAll = async (req, res) => {
   if (req.query.filter) {
     if (req.query.type_gambar) {
       await Order.findAll({
-        //   {
-        //     model: Culture,
-        //     attributes: ['culture_id', 'nama_budaya'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Destination,
-        //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Merchandise,
-        //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Image,
-        //     attributes: ['images_link'],
-        //     require: false
-        //   },
-        //   {
-        //     model: Videovr,
-        //     require: false
-        //   }
-        // ]
       })
         .then(data => {
             response.successResponse(res, data);
@@ -171,6 +148,39 @@ exports.findOne = async (req, res) => {
       });
     });
 };
+
+exports.findOne2 = async (req, res) => {
+  const id = req.user_id_loggedin;
+
+  await Order.findAll({
+    where: {user_id: id},
+  })
+    .then(data => {
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Order with id=" + id
+      });
+    });
+};
+
+exports.findOne3 = async (req, res) => {
+  const id = req.params.id;
+
+  await Order.findAll({
+    where: {user_id: id},
+  })
+    .then(data => {
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Order with id=" + id
+      });
+    });
+};
+
 
 exports.update = (req, res) => {
   const id = req.params.id;
