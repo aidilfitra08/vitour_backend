@@ -198,3 +198,30 @@ exports.update = (req, res) => {
     });
 };
 
+exports.delete = async (req, res) => {
+  const id = req.params.id;
+
+  await Order.destroy({
+    where: { order_id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+            status: 200,
+            success: true,
+            message: "Order was deleted successfully!"
+        });
+      } else {
+        res.status(404).send({
+          message: `Order with id=${id} not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete Order with id=" + id
+      });
+    });
+};
+
+

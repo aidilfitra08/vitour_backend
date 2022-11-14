@@ -2,6 +2,7 @@ module.exports = app => {
     var router = require("express").Router();
     var Order = require('../controllers/order');
     const midtransClient = require('midtrans-client');
+    const auth  = require("../middleware/auth.js")
     // Create Core Api Instances
     var coreApi = new midtransClient.CoreApi({
         isProduction : false,
@@ -24,10 +25,17 @@ module.exports = app => {
         //         });
         //     });
         // });
+        // Accesed By Midtrans
         router.post('/notifikasi',Order.updateNotifikasi)
-        router.get('/', Order.findAll)
-        router.post('/charge',Order.create)
-        router.get("/:id", Order.findOne);
-        router.put("/:id",Order.update);
+        // Retrieve All Orders
+        router.get('/',auth.adminPage,Order.findAll)
+        // Charge Payment to Midtrans
+        router.post('/charge',auth.webPage,Order.create)
+        // Retrieve specific order 
+        router.get("/:id", auth.webPage,Order.findOne);
+        // Update Order
+        router.put("/:id",auth.adminPage,Order.update);
+        // Delete specific order
+        router.delete("/:id", auth.adminPage,Order.delete);
         app.use("/api/order", router);
 };
