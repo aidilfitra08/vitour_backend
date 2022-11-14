@@ -63,7 +63,7 @@ exports.updateNotifikasi = async (req, res) => {
   coreApi.transaction.notification(req.body)
   .then((statusResponse)=>{
     let orderId = statusResponse.order_id;
-    let responseMidtrans = JSON.stringify(statusResponse);
+    let responseMidtrans = statusResponse;
     Order.update({
       response_midtrans:responseMidtrans,
       status:statusResponse.transaction_status

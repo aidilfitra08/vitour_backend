@@ -1,5 +1,6 @@
 const db = require("../models");
-const User = db.admin;
+const response = require("../../helper/macro");
+const User = db.user;
 const Op = db.Sequelize.Op;
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -132,12 +133,14 @@ exports.login = async (req, res) => {
 // })
 
 
-// Retrieve all users from the database.
+// Get all registered user data
 // exports.findAll = (req, res) => {
-//   const title = req.query.title;
+//   // const title = req.query.title;
 //   var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
 
-//   Tutorial.findAll({ where: condition })
+//   User.findAll({
+//     attributes: ['foo', 'bar']
+//   })
 //     .then(data => {
 //       res.send(data);
 //     })
@@ -149,45 +152,80 @@ exports.login = async (req, res) => {
 //     });
 // };
 
-// // Find a single Tutorial with an id
-// exports.findOne = (req, res) => {
-//   const id = req.params.id;
+// // Find User Profile
+exports.getUserProfile = async (req, res) => {
+  // const id = req.params.id;
+  let user_id = req.user_id_loggedin;
+  user_id = user_id.toString();
+  await User.findOne({
+    attributes: ['name', 'email'],
+    where : {user_id: user_id}
+  })
+    .then(data => {
+      // res.send(data)
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Profile with id=" + id
+      });
+    });
+};
 
-//   Tutorial.findByPk(id)
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Error retrieving Tutorial with id=" + id
-//       });
-//     });
-// };
+// // Update user profile
+exports.updateProfile = async (req, res) => {
+  let user_id = req.user_id_loggedin;
+  user_id = user_id.toString();
 
-// // Update a Tutorial by the id in the request
-// exports.update = (req, res) => {
-//   const id = req.params.id;
+  await User.update(req.body, {
+    where: { user_id: user_id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Profile was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Profile with id=${id}. Maybe Profile was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Profile with id=" + id
+      });
+    });
+};
 
-//   Tutorial.update(req.body, {
-//     where: { id: id }
-//   })
-//     .then(num => {
-//       if (num == 1) {
-//         res.send({
-//           message: "Tutorial was updated successfully."
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot update Tutorial with id=${id}. Maybe Tutorial was not found or req.body is empty!`
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Error updating Tutorial with id=" + id
-//       });
-//     });
-// };
+exports.updatePassword = async (req, res) => {
+  let user_id = req.user_id_loggedin;
+  user_id = user_id.toString();
+
+  let encryptedPassword = await bcrypt.hash(req.body.password, 10);
+  let update_form = {
+    password : encryptedPassword
+  }
+  await User.update(update_form, {
+    where: { user_id: user_id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "Password was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update Password with id=${id}. Maybe user was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating Password with user_id=" + id
+      });
+    });
+};
 
 // // Delete a Tutorial with the specified id in the request
 // exports.delete = (req, res) => {

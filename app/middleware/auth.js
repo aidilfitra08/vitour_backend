@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const db = require("../models");
-const User = db.admin;
+const User = db.user;
 
 exports.adminPage = async (req, res, next) => {
   try {
