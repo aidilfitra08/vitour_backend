@@ -158,7 +158,7 @@ exports.getUserProfile = async (req, res) => {
   let user_id = req.user_id_loggedin;
   user_id = user_id.toString();
   await User.findOne({
-    attributes: ['name', 'email'],
+    attributes: ['name', 'email', 'handphone', 'address'],
     where : {user_id: user_id}
   })
     .then(data => {
