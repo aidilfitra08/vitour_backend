@@ -194,7 +194,7 @@ exports.findOne = async (req, res) => {
           include: [{
             model: Image,
             where : {
-              type_gambar: "gambar_kota"
+              type_gambar: req.query.type_gambar
             },
             attributes: ['images_link'],
             require: false
@@ -213,6 +213,55 @@ exports.findOne = async (req, res) => {
   await City.findOne(
     {
       where: {city_id: id},
+        include: [{
+          model: Image,
+          attributes: ['images_link'],
+          require: false
+        }]
+    }
+  )
+    .then(data => {
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving City with id=" + id
+      });
+    });
+}
+};
+
+exports.getCityByName = async (req, res) => {
+  const id = req.params.id;
+  // if (!req.query.filter) {
+  //   return req.query.filter;
+  // }
+  if(req.query.type_gambar){
+    await City.findOne(
+      {
+        where: {nama_kota: id},
+          include: [{
+            model: Image,
+            where : {
+              type_gambar: req.query.type_gambar
+            },
+            attributes: ['images_link'],
+            require: false
+          }]
+      }
+    )
+      .then(data => {
+        response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving City with id=" + id
+        });
+      });
+  } else {
+  await City.findOne(
+    {
+      where: {nama_kota: id},
         include: [{
           model: Image,
           attributes: ['images_link'],

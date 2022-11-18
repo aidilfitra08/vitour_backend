@@ -15,6 +15,9 @@ module.exports = app => {
   
     // // Retrieve a single City with id
     router.get("/:id", city.findOne);
+
+    // // Retrieve a single City with city_name
+    router.get("/name/:id", city.getCityByName);
   
     // // Update a City with id
     router.put("/:id", auth.adminPage, city.update);
