@@ -60,7 +60,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
-  Destination.findAll({
+  Destination.findOne({
     where: {destination_id: id},
       include: [{
         model: Image,
