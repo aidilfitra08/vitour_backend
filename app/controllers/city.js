@@ -187,50 +187,37 @@ exports.findOne = async (req, res) => {
   // if (!req.query.filter) {
   //   return req.query.filter;
   // }
-
+  if(req.query.type_gambar){
+    await City.findOne(
+      {
+        where: {city_id: id},
+          include: [{
+            model: Image,
+            where : {
+              type_gambar: "gambar_kota"
+            },
+            attributes: ['images_link'],
+            require: false
+          }]
+      }
+    )
+      .then(data => {
+        response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message: "Error retrieving City with id=" + id
+        });
+      });
+  } else {
   await City.findOne(
     {
       where: {city_id: id},
         include: [{
           model: Image,
-          where : {
-            type_gambar: "gambar_kota"
-          },
           attributes: ['images_link'],
           require: false
-          }]
-      // include: [{
-      //   model: Culinary,
-      //   attributes: ['culinary_id', 'nama_kuliner'],
-      //   require: false
-      //   },
-      //   {
-      //     model: Culture,
-      //     attributes: ['culture_id', 'nama_budaya'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Destination,
-      //     attributes: ['destination_id', 'nama_destinasi', 'tipe_destinasi'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Merchandise,
-      //     attributes: ['merchandise_id', 'nama_merchandise','merchandise_type'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Image,
-      //     attributes: ['images_link'],
-      //     require: false
-      //   },
-      //   {
-      //     model: Videovr,
-      //     require: false
-      //   }
-      // ],
-      
-
+        }]
     }
   )
     .then(data => {
@@ -241,6 +228,7 @@ exports.findOne = async (req, res) => {
         message: "Error retrieving City with id=" + id
       });
     });
+}
 };
 
 // // Update a Tutorial by the id in the request
