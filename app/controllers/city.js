@@ -190,7 +190,7 @@ exports.findOne = async (req, res) => {
 
   await City.findOne(
     {
-      where: {nama_kota: id},
+      where: {city_id: id},
         include: [{
           model: Image,
           where : {
