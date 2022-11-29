@@ -31,8 +31,10 @@ exports.create = (req, res) => {
 };
 
 // Retrieve all Tutorials from the database.
-exports.findAll = (req, res) => {
-  Destination.findAll({
+exports.findAll = async (req, res) => {
+  if (req.query.tipe_destinasi){
+    await Destination.findAll({
+      where:{tipe_destinasi: req.query.tipe_destinasi},
       include: [{
         model: Image,
         attributes: ['images_link'],
@@ -54,6 +56,30 @@ exports.findAll = (req, res) => {
           err.message || "Some error occurred while retrieving Destinations."
       });
     });
+  }else{
+      Destination.findAll({
+        include: [{
+          model: Image,
+          attributes: ['images_link'],
+          require: false
+          },
+        {
+          model:Videovr,
+          attributes:['link_video'],
+          require:false
+        }]
+  
+    })
+      .then(data => {
+          response.successResponse(res, data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving Destinations."
+        });
+      });
+    }
 };
 
 // Find a single Tutorial with an id
@@ -83,6 +109,8 @@ exports.findOne = (req, res) => {
       });
     });
 };
+
+
 
 // // Update a Tutorial by the id in the request
 exports.update = (req, res) => {
