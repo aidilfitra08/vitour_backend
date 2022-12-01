@@ -14,6 +14,11 @@ module.exports = app => {
   router.put("/my-profile", auth.webPage, user.updateProfile);
   router.put("/my-password", auth.webPage, user.updatePassword);
 
+  router.get("/user", auth.adminPage, user.getAllUser);
+  router.get("/user/:id", auth.adminPage, user.getUserDetail);
+  router.put("/user/:id", auth.adminPage, user.updateUser);
+  router.delete("/user/:id", auth.adminPage, user.deleteUser);
+
   app.use("/api", router);
   };
   
