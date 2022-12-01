@@ -133,25 +133,6 @@ exports.login = async (req, res) => {
 // })
 
 
-// Get all registered user data
-// exports.findAll = (req, res) => {
-//   // const title = req.query.title;
-//   var condition = title ? { title: { [Op.iLike]: `%${title}%` } } : null;
-
-//   User.findAll({
-//     attributes: ['foo', 'bar']
-//   })
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials."
-//       });
-//     });
-// };
-
 // // Find User Profile
 exports.getUserProfile = async (req, res) => {
   // const id = req.params.id;
@@ -227,58 +208,97 @@ exports.updatePassword = async (req, res) => {
     });
 };
 
-// // Delete a Tutorial with the specified id in the request
-// exports.delete = (req, res) => {
-//   const id = req.params.id;
+/*
+  Admin API
+*/
 
-//   Tutorial.destroy({
-//     where: { id: id }
-//   })
-//     .then(num => {
-//       if (num == 1) {
-//         res.send({
-//           message: "Tutorial was deleted successfully!"
-//         });
-//       } else {
-//         res.send({
-//           message: `Cannot delete Tutorial with id=${id}. Maybe Tutorial was not found!`
-//         });
-//       }
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message: "Could not delete Tutorial with id=" + id
-//       });
-//     });
-// };
+// Get all registered user data
+exports.getAllUser = (req, res) => {
 
-// // Delete all Tutorials from the database.
-// exports.deleteAll = (req, res) => {
-//   Tutorial.destroy({
-//     where: {},
-//     truncate: false
-//   })
-//     .then(nums => {
-//       res.send({ message: `${nums} Tutorials were deleted successfully!` });
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while removing all tutorials."
-//       });
-//     });
-// };
+  User.findAll({
+    attributes: ['user_id', 'name', 'email', 'role', 'address', 'handphone', 'prof_pic_link']
+  })
+    .then(data => {
+      res.status(200).send({
+        status: 200,
+        success: true,
+        data: data
+      });
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving all user data."
+      });
+    });
+};
 
-// // find all published Tutorial
-// exports.findAllPublished = (req, res) => {
-//   Tutorial.findAll({ where: { published: true } })
-//     .then(data => {
-//       res.send(data);
-//     })
-//     .catch(err => {
-//       res.status(500).send({
-//         message:
-//           err.message || "Some error occurred while retrieving tutorials."
-//       });
-//     });
-// };
+// // Find User Profile
+exports.getUserDetail = async (req, res) => {
+  const id = req.params.id;
+  // let user_id = req.user_id_loggedin;
+  // user_id = user_id.toString();
+  await User.findOne({
+    attributes: ['user_id', 'name', 'email', 'role', 'address', 'handphone', 'prof_pic_link'],
+    where : {user_id: id}
+  })
+    .then(data => {
+      // res.send(data)
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving user detail with id=" + id
+      });
+    });
+};
+
+// // Update user profile
+exports.updateUser = async (req, res) => {
+  const id = req.params.id;
+
+  await User.update(req.body, {
+    where: { user_id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was updated successfully."
+        });
+      } else {
+        res.send({
+          message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error updating User with id=" + id
+      });
+    });
+};
+
+// // Delete a user with the specified id in the request
+exports.deleteUser = async (req, res) => {
+  const id = req.params.id;
+
+  await User.destroy({
+    where: { user_id: id }
+  })
+    .then(num => {
+      if (num == 1) {
+        res.send({
+          message: "User was deleted successfully!"
+        });
+      } else {
+        res.send({
+          message: `Cannot delete user with id=${id}. Maybe user was not found!`
+        });
+      }
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Could not delete user with id=" + id
+      });
+    });
+};
