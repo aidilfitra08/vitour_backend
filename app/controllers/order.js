@@ -149,6 +149,23 @@ exports.findOne = async (req, res) => {
     });
 };
 
+exports.detailOrdersWeb = async (req, res) => {
+  const id = req.params.id;
+
+  await Order.findOne({
+    where: {order_id: id},
+  })
+    .then(data => {
+      data.response_midtrans = JSON.parse(data.response_midtrans)
+      response.successResponse(res, data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message: "Error retrieving Order with id=" + id + (err)
+      });
+    });
+};
+
 exports.findOne2 = async (req, res) => {
   const id = req.user_id_loggedin;
 

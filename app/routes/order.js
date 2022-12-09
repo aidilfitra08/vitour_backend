@@ -34,6 +34,9 @@ module.exports = app => {
 
         // Retrieve specific order (By order_id)
         router.get("/:id", auth.webPage,Order.findOne);
+
+        // Retrieve specific order (By order_id)
+        router.get("/detail/:id", auth.webPage,Order.detailOrdersWeb);
         // Retrieve specific order (By Logged In user_id)
         router.get("/user/find",auth.webPage,Order.findOne2)
         // Retrieve specific order (By Params user_id)
