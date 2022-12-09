@@ -20,6 +20,7 @@ module.exports = app => {
   router.put("/user/:id", auth.adminPage, user.updateUser);
   router.delete("/user/:id", auth.adminPage, user.deleteUser);
 
+  //
   app.use("/api", router);
   };
   
